@@ -1,12 +1,18 @@
 # Frizz
 
-Frizz is a utility for deploying static sites to S3.
+Frizz is a utility for deploying static sites to S3. It also comes with
+some nifty Middleman integrations for managing environments.
 
 ## Features
 
 * Sets Content-Type (including CSS files which S3 is notoriously bad at)
 * Only uploads files that have changed
 * Removes files that have been deleted locally
+
+### Middleman Features
+
+* Free rake tasks for building and deploying your environments
+* Accessing environment-specific configurations from your views
 
 ## Installation
 
@@ -46,9 +52,18 @@ end
 
 ### Basic deploys
 
+Deploy the contents of `build/` to your static website bucket named
+"my-bucket-name.com":
+
 ```ruby
 site = Frizz::Site.new("my-bucket-name.com")
 site.deploy!
+```
+
+Specify a different local build dir:
+
+```ruby
+site = Frizz::Site.new("my-bucket-name.com", from: "build/public")
 ```
 
 ## Usage With Middleman

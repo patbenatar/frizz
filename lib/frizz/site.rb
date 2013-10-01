@@ -1,6 +1,7 @@
 module Frizz
   class Site
-    def initialize(bucket_name)
+    def initialize(bucket_name, options={})
+      @options = { from: "build" }.merge options
       @local = Frizz::Local.new(path_to_deploy)
       @remote = Frizz::Remote.new(bucket_name)
     end
@@ -11,10 +12,10 @@ module Frizz
 
     private
 
-    attr_reader :local, :remote
+    attr_reader :local, :remote, :options
 
     def path_to_deploy
-      File.expand_path("build")
+      File.expand_path(options[:from])
     end
   end
 end
