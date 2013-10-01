@@ -52,18 +52,18 @@ end
 
 ### Basic deploys
 
-Deploy the contents of `build/` to your static website bucket named
-"my-bucket-name.com":
+Deploy the contents of `build/` to your static website at "my-static-site.com",
+assuming your S3 bucket is named after your host as S3 static hosting requires:
 
 ```ruby
-site = Frizz::Site.new("my-bucket-name.com")
+site = Frizz::Site.new("my-static-site.com")
 site.deploy!
 ```
 
 Specify a different local build dir:
 
 ```ruby
-site = Frizz::Site.new("my-bucket-name.com", from: "build/public")
+site = Frizz::Site.new("my-static-site.com", from: "build/public")
 ```
 
 ## Usage With Middleman
@@ -97,9 +97,9 @@ With the following `frizz.yml`:
 ```yaml
 environments:
   staging:
-    bucket: "staging.example.com"
+    host: "staging.example.com"
   production:
-    bucket: "example.com"
+    host: "example.com"
 ```
 
 Frizz would give us the following Rake tasks:
@@ -134,11 +134,11 @@ With the following `frizz.yml`:
 ```yaml
 environments:
   staging:
-    bucket: "staging.example.com"
+    host: "staging.example.com"
     api_root: http://api.staging.example.com/v0
     welcome_message: I'm A Staging Server
   production:
-    bucket: "example.com"
+    host: "example.com"
     api_root: http://api.example.com/v0
     welcome_message: I'm A Production Server
   development:

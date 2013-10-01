@@ -1,9 +1,9 @@
 module Frizz
   class Site
-    def initialize(bucket_name, options={})
+    def initialize(host, options={})
       @options = { from: "build" }.merge options
       @local = Frizz::Local.new(path_to_deploy)
-      @remote = Frizz::Remote.new(bucket_name)
+      @remote = Frizz::Remote.new(host)
     end
 
     def deploy!
