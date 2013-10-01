@@ -17,8 +17,8 @@ module Frizz
 
     # This is a creative way to allow for calling frizz.production? or
     # frizz.staging? from the Middleman view helpers
-    def method_missing(meth, args, &block)
-      name == meth.to_s
+    def method_missing(meth, *args, &block)
+      "#{name}?" == meth.to_s
     end
   end
 end
