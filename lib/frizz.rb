@@ -6,8 +6,8 @@ module Frizz
   autoload :Local, "frizz/local"
   autoload :Remote, "frizz/remote"
   autoload :Sync, "frizz/sync"
-
-  Configuration = Struct.new(:access_key_id, :secret_access_key)
+  autoload :Configuration, "frizz/configuration"
+  autoload :Environment, "frizz/environment"
 
   class << self
     def configure
