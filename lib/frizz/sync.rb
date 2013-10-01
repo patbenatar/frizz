@@ -18,7 +18,7 @@ module Frizz
           local_index.delete(local_path)
         else
           puts "#{local_path}: updated".green
-          remote.upload file_for(local_path), local_path
+          remote.upload local.file_for(local_path), local_path
           local_index.delete(local_path)
         end
       end
