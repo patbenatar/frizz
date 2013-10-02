@@ -14,7 +14,10 @@ module Frizz
       self.current_environment = ENV["FRIZZ_ENV"] || "development"
 
       # Allow to be overridden in yaml
-      load_yaml!
+      if yaml_exists?
+        load_yaml!
+        start_yaml_listener
+      end
     end
 
     def environment
@@ -29,12 +32,27 @@ module Frizz
 
     private
 
+    def yaml_exists?
+      File.exists?(YAML_FILENAME)
+    end
+
     def load_yaml!
-      return unless File.exists?(YAML_FILENAME)
+      puts "== Frizz: Loading frizz.yml"
 
       YAML.load_file(YAML_FILENAME).each do |key, value|
         send "#{key}=", value
       end
+    end
+
+    def start_yaml_listener
+      require "listen"
+      listener = Listen.to Dir.pwd
+
+      listener.change do |modified, added, removed|
+        load_yaml! if modified.include? "frizz.yml"
+      end
+
+      listener.start
     end
   end
 end

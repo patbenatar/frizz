@@ -24,4 +24,5 @@ Gem::Specification.new do |spec|
   spec.add_dependency "s3", "~> 0.3.13"
   spec.add_dependency "colorize", "~> 0.6.0"
   spec.add_dependency "mime-types", "~> 1.25"
+  spec.add_dependency "listen", "~> 1.2.2"
 end
