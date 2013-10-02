@@ -15,7 +15,7 @@ module Frizz
     end
 
     def file_for(local_path)
-      ::File.open expand_path(local_path)
+      ::File.read expand_path(local_path)
     end
 
     private
