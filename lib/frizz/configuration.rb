@@ -37,8 +37,6 @@ module Frizz
     end
 
     def load_yaml!
-      puts "== Frizz: Loading frizz.yml"
-
       YAML.load_file(YAML_FILENAME).each do |key, value|
         send "#{key}=", value
       end
