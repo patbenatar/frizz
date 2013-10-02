@@ -120,11 +120,11 @@ configurations in `frizz.yml` and access them later in your Middleman app's view
 
 #### Configuration
 
-Add it to your `config.rb`:
+Active the Extension in your `config.rb`:
 
 ```ruby
-require "frizz/middleman/view_helpers"
-helpers Frizz::Middleman::ViewHelpers
+require "frizz/middleman/extension"
+activate :frizz
 ```
 
 #### Usage
