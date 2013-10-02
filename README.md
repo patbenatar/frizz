@@ -80,7 +80,8 @@ to.
 
 ### Rake tasks
 
-Based on your `frizz.yml`, Frizz will create useful Rake tasks for you.
+Based on your `frizz.yml`, Frizz will create useful Rake tasks for building
+and deploying.
 
 #### Configuration
 
@@ -106,10 +107,12 @@ Frizz would give us the following Rake tasks:
 
 ```bash
 $ rake -T
-rake frizz:build:production   # Build production
-rake frizz:build:staging      # Build staging
-rake frizz:deploy:production  # Build and deploy production
-rake frizz:deploy:staging     # Build and deploy staging
+rake frizz:build:production    # Build production
+rake frizz:build:staging       # Build staging
+rake frizz:deploy:production   # Deploy build dir to production: example.com
+rake frizz:deploy:staging      # Deploy build dir to staging: staging.example.com
+rake frizz:release:production  # Build and deploy production: example.com
+rake frizz:release:staging     # Build and deploy staging: staging.example.com
 ```
 
 ### Settings and Variables for each of your environments

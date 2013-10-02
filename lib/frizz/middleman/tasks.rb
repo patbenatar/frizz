@@ -32,7 +32,16 @@ module Frizz
 
           namespace :deploy do
             relevant_environments.each do |name, env|
-              desc "Build and deploy #{env.name}"
+              desc "Deploy build dir to #{env.name}: #{env.host}"
+              task env.name do
+                Frizz::Site.new(env.host).deploy!
+              end
+            end
+          end
+
+          namespace :release do
+            relevant_environments.each do |name, env|
+              desc "Build and deploy #{env.name}: #{env.host}"
               task env.name => ["frizz:build:#{env.name}"] do
                 Frizz::Site.new(env.host).deploy!
               end
