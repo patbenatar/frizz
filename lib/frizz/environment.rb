@@ -1,6 +1,6 @@
 module Frizz
   class Environment
-    attr_reader :name
+    attr_reader :name, :bucket
 
     def initialize(name, data)
       @name = name
@@ -13,6 +13,8 @@ module Frizz
           instance_variable_get(ivar_name)
         end
       end
+
+      @bucket ||= @host
     end
 
     # This is a creative way to allow for calling frizz.production? or

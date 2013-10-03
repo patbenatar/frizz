@@ -52,8 +52,7 @@ end
 
 ### Basic deploys
 
-Deploy the contents of `build/` to your static website at "my-static-site.com",
-assuming your S3 bucket is named after your host as S3 static hosting requires:
+Deploy the contents of `build/` to your bucket named "my-static-site.com":
 
 ```ruby
 site = Frizz::Site.new("my-static-site.com")
@@ -114,6 +113,13 @@ rake frizz:deploy:staging      # Deploy build dir to staging: staging.example.co
 rake frizz:release:production  # Build and deploy production: example.com
 rake frizz:release:staging     # Build and deploy staging: staging.example.com
 ```
+
+##### Custom bucket names
+
+If your buckets aren't named following the S3 static site naming conventions
+(maybe you're putting a CDN in front of it and not using S3 static site
+hosting), you can set a `bucket:` key along for each environment in `frizz.yml`
+and it will be used to determine where to upload the build to.
 
 ### Settings and Variables for each of your environments
 

@@ -32,18 +32,18 @@ module Frizz
 
           namespace :deploy do
             relevant_environments.each do |name, env|
-              desc "Deploy build dir to #{env.name}: #{env.host}"
+              desc "Deploy build dir to #{env.name}: #{env.bucket}"
               task env.name do
-                Frizz::Site.new(env.host).deploy!
+                Frizz::Site.new(env.bucket).deploy!
               end
             end
           end
 
           namespace :release do
             relevant_environments.each do |name, env|
-              desc "Build and deploy #{env.name}: #{env.host}"
+              desc "Build and deploy #{env.name}: #{env.bucket}"
               task env.name => ["frizz:build:#{env.name}"] do
-                Frizz::Site.new(env.host).deploy!
+                Frizz::Site.new(env.bucket).deploy!
               end
             end
           end
