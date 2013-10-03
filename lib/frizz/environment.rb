@@ -17,10 +17,8 @@ module Frizz
       @bucket ||= @host
     end
 
-    # This is a creative way to allow for calling frizz.production? or
-    # frizz.staging? from the Middleman view helpers
-    def method_missing(meth, *args, &block)
-      "#{name}?" == meth.to_s
-    end
+    # Don't raise on undefined methods. Allows for flexible use of frizz.yml
+    # attributes.
+    def method_missing(meth, *args, &block); end
   end
 end
