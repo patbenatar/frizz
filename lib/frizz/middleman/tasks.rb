@@ -42,9 +42,7 @@ module Frizz
           namespace :release do
             relevant_environments.each do |name, env|
               desc "Build and deploy #{env.name}: #{env.bucket}"
-              task env.name => ["frizz:build:#{env.name}"] do
-                Frizz::Site.new(env.bucket).deploy!
-              end
+              task env.name => ["frizz:build:#{env.name}", "frizz:deploy:#{env.name}"] do; end
             end
           end
         end
