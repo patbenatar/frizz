@@ -5,6 +5,7 @@ module Frizz
   autoload :Site, "frizz/site"
   autoload :Local, "frizz/local"
   autoload :Remote, "frizz/remote"
+  autoload :Distribution, "frizz/distribution"
   autoload :Sync, "frizz/sync"
   autoload :Configuration, "frizz/configuration"
   autoload :Environment, "frizz/environment"

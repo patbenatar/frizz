@@ -34,7 +34,7 @@ module Frizz
             relevant_environments.each do |name, env|
               desc "Deploy build dir to #{env.name}: #{env.bucket}"
               task env.name do
-                Frizz::Site.new(env.bucket).deploy!
+                Frizz::Site.new(env.bucket, distribution: env.distribution).deploy!
               end
             end
           end

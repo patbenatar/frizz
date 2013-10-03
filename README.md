@@ -8,6 +8,7 @@ some nifty Middleman integrations for managing environments.
 * Sets Content-Type (including CSS files which S3 is notoriously bad at)
 * Only uploads files that have changed
 * Removes files that have been deleted locally
+* Invalidate changed files on CloudFront
 
 ### Middleman Features
 
@@ -65,6 +66,17 @@ Specify a different local build dir:
 site = Frizz::Site.new("my-static-site.com", from: "build/public")
 ```
 
+### Deploy with CloudFront invalidation
+
+Optionally provide a CloudFront Distribution ID and Frizz will invalidate
+the cache for any files that changed or were removed in the deploy. Note:
+invalidating a CloudFront cache can take some time.
+
+```ruby
+site = Frizz::Site.new("my-bucket", distribution: "DISTRIBUTION_ID")
+site.deploy!
+```
+
 ## Usage With Middleman
 
 Managing more than the basic two environments (dev and build) in a Middleman app
@@ -100,6 +112,7 @@ environments:
     host: "staging.example.com"
   production:
     host: "example.com"
+    distribution "CLOUDFRONT_DISTRIBUTION_ID"
 ```
 
 Frizz would give us the following Rake tasks:
