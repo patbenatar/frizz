@@ -35,6 +35,12 @@ Or install it yourself as:
 $ gem install frizz
 ```
 
+### Caveats
+
+This gem is built against Ruby 2 and there are known issues when running
+against 1.9. If you experience those issues, try upgrading your Ruby or please
+add backwards compatibility and send a PR.
+
 ## Usage
 
 ### Configuration
