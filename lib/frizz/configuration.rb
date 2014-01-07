@@ -1,3 +1,5 @@
+require "yaml"
+
 module Frizz
   class Configuration
     YAML_FILENAME = "frizz.yml"
