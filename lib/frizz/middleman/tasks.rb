@@ -25,6 +25,7 @@ module Frizz
             relevant_environments.each do |name, env|
               desc "Build #{env.name}"
               task env.name do
+                FileUtils.rm_rf(Dir[".cache"])
                 CmdHelper.run_with_live_output "FRIZZ_ENV=#{env.name} middleman build"
               end
             end
