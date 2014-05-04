@@ -46,13 +46,10 @@ module Frizz
 
     def start_yaml_listener
       require "listen"
-      listener = Listen.to Dir.pwd
 
-      listener.change do |modified, added, removed|
+      Listen.to(Dir.pwd) do |modified, added, removed|
         load_yaml! if modified.include? "frizz.yml"
       end
-
-      listener.start
     end
   end
 end
