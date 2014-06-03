@@ -3,12 +3,13 @@ require "mime-types"
 
 module Frizz
   class Remote
-    def initialize(bucket_name)
+    def initialize(bucket_name, ignorance)
       @bucket_name = bucket_name
+      @ignorance = ignorance
     end
 
     def files
-      @files ||= bucket.objects
+      @files ||= bucket.objects.reject { |o| ignore?(o) }
     end
 
     def upload(file, key)
@@ -21,7 +22,11 @@ module Frizz
 
     private
 
-    attr_reader :bucket_name
+    attr_reader :bucket_name, :ignorance
+
+    def ignore?(object)
+      ignorance.ignore?(object.key)
+    end
 
     def bucket
       @bucket ||= service.buckets.find(bucket_name)

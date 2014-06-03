@@ -83,6 +83,19 @@ site = Frizz::Site.new("my-bucket", distribution: "DISTRIBUTION_ID")
 site.deploy!
 ```
 
+### Ignore files in a deploy
+
+If you want to ignore files or directories when syncing local with remote
+(`logs/` for example), you can specify patterns to ignore for each environment
+in `frizz.yml`:
+
+```yaml
+environments:
+  production:
+    ignore:
+      - "logs/*"
+```
+
 ## Usage With Middleman
 
 Managing more than the basic two environments (dev and build) in a Middleman app

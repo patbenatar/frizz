@@ -3,12 +3,14 @@ module Frizz
     def initialize(host, options={})
       @options = { from: "build" }.merge options
 
-      @local = Local.new(path_to_deploy)
-      @remote = Remote.new(host)
+      @ignorance = Ignorance.new(@options[:ignore])
 
       if @options[:distribution]
         @distribution = Distribution.new(@options[:distribution])
       end
+
+      @local = Local.new(path_to_deploy, ignorance)
+      @remote = Remote.new(host, ignorance)
     end
 
     def deploy!
@@ -18,7 +20,7 @@ module Frizz
 
     private
 
-    attr_reader :local, :remote, :options, :distribution
+    attr_reader :local, :remote, :options, :distribution, :ignorance
 
     def path_to_deploy
       File.expand_path(options[:from])
