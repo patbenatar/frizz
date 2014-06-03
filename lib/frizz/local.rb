@@ -1,14 +1,15 @@
 module Frizz
   class Local
-    def initialize(root_path)
+    def initialize(root_path, ignorance)
       @root_path = root_path
+      @ignorance = ignorance
     end
 
     def files
       @files ||= begin
         Dir.chdir(root_path) do
           Dir["**/*"].map do |local_path|
-            File.new(expand_path(local_path), local_path) unless ::File.directory?(local_path)
+            File.new(expand_path(local_path), local_path) unless ignore?(local_path)
           end.compact
         end
       end
@@ -20,10 +21,14 @@ module Frizz
 
     private
 
-    attr_reader :root_path
+    attr_reader :root_path, :ignorance
 
     def expand_path(local_path)
       ::File.join root_path, local_path
+    end
+
+    def ignore?(path)
+      ::File.directory?(path) || ignorance.ignore?(path)
     end
 
     class File

@@ -9,6 +9,7 @@ module Frizz
   autoload :Sync, "frizz/sync"
   autoload :Configuration, "frizz/configuration"
   autoload :Environment, "frizz/environment"
+  autoload :Ignorance, "frizz/ignorance"
 
   class << self
     def configure
