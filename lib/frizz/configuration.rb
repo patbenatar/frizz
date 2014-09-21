@@ -48,8 +48,8 @@ module Frizz
       require "listen"
 
       Listen.to(Dir.pwd) do |modified, added, removed|
-        load_yaml! if modified.include? "frizz.yml"
-      end
+        load_yaml! if modified.include? File.expand_path(YAML_FILENAME)
+      end.start
     end
   end
 end
