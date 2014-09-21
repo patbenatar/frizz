@@ -23,7 +23,7 @@ module Frizz
     end
 
     def environment
-      environments[current_environment]
+      environments[current_environment] || NullEnvironment.new
     end
 
     def environments=(environments_data)
