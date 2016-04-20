@@ -1,41 +1,58 @@
-require "s3"
+require 'aws-sdk'
 require "mime-types"
 
 module Frizz
   class Remote
-    def initialize(bucket_name, ignorance)
+    def initialize(bucket_name, ignorance, options = {})
+      @options = options
       @bucket_name = bucket_name
       @ignorance = ignorance
     end
 
     def files
-      @files ||= bucket.objects.reject { |o| ignore?(o) }
+      @files ||= objects.reject { |o| ignore?(o) }
     end
 
-    def upload(file, key)
-      bucket.objects.build(key).tap do |obj|
-        obj.acl = :public_read
-        obj.content = file
-        obj.content_type = MIME::Types.type_for(key).first.content_type
-      end.save
+    def upload(file, key, options = {})
+      object_options = {
+        bucket: bucket_name,
+        body: file,
+        acl: 'public-read',
+        content_type: MIME::Types.type_for(key).first.content_type,
+        key: key
+      }
+
+      object_options[:website_redirect_location] = options[:redirect_to] if options[:redirect_to]
+
+      client.put_object object_options
+    end
+
+    def delete(remote_file)
+      client.delete_object(
+        bucket: bucket_name,
+        key: remote_file.key
+      )
     end
 
     private
 
-    attr_reader :bucket_name, :ignorance
+    attr_reader :bucket_name, :ignorance, :options
 
     def ignore?(object)
       ignorance.ignore?(object.key)
     end
 
-    def bucket
-      @bucket ||= service.buckets.find(bucket_name)
+    def objects
+      client.list_objects(bucket: bucket_name).contents
     end
 
-    def service
-      @service ||= S3::Service.new(
-        access_key_id: Frizz.configuration.access_key_id,
-        secret_access_key: Frizz.configuration.secret_access_key,
+    def client
+      @client ||= Aws::S3::Client.new(
+        region: options[:region],
+        credentials: Aws::Credentials.new(
+          Frizz.configuration.access_key_id,
+          Frizz.configuration.secret_access_key
+        )
       )
     end
   end

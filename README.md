@@ -9,6 +9,7 @@ some nifty Middleman integrations for managing environments.
 * Only uploads files that have changed
 * Removes files that have been deleted locally
 * Invalidate changed files on CloudFront
+* Supports S3 redirects
 
 ### Middleman Features
 
@@ -62,14 +63,14 @@ end
 Deploy the contents of `build/` to your bucket named "my-static-site.com":
 
 ```ruby
-site = Frizz::Site.new("my-static-site.com")
+site = Frizz::Site.new("my-static-site.com", region: "us-west-2")
 site.deploy!
 ```
 
 Specify a different local build dir:
 
 ```ruby
-site = Frizz::Site.new("my-static-site.com", from: "build/public")
+site = Frizz::Site.new("my-static-site.com", region: "us-west-2", from: "build/public")
 ```
 
 ### Deploy with CloudFront invalidation
@@ -79,7 +80,7 @@ the cache for any files that changed or were removed in the deploy. Note:
 invalidating a CloudFront cache can take some time.
 
 ```ruby
-site = Frizz::Site.new("my-bucket", distribution: "DISTRIBUTION_ID")
+site = Frizz::Site.new("my-bucket", region: "us-west-2", distribution: "DISTRIBUTION_ID")
 site.deploy!
 ```
 
@@ -94,6 +95,19 @@ environments:
   production:
     ignore:
       - "logs/*"
+```
+
+### Redirects
+
+You can setup [S3 redirects](http://docs.aws.amazon.com/AmazonS3/latest/dev/how-to-page-redirect.html)
+in `frizz.yml`:
+
+```yaml
+environments:
+  production:
+    redirect_rules:
+      - from: "old/page.html"
+        to: "/new/page.html"
 ```
 
 ## Usage With Middleman
@@ -129,8 +143,10 @@ With the following `frizz.yml`:
 environments:
   staging:
     host: "staging.example.com"
+    region: "us-west-2"
   production:
     host: "example.com"
+    region: "us-west-2"
     distribution "CLOUDFRONT_DISTRIBUTION_ID"
 ```
 
@@ -176,10 +192,12 @@ With the following `frizz.yml`:
 environments:
   staging:
     host: "staging.example.com"
+    region: "us-west-2"
     api_root: http://api.staging.example.com/v0
     welcome_message: I'm A Staging Server
   production:
     host: "example.com"
+    region: "us-west-2"
     api_root: http://api.example.com/v0
     welcome_message: I'm A Production Server
   development:

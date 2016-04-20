@@ -9,8 +9,11 @@ module Frizz
         @distribution = Distribution.new(@options[:distribution])
       end
 
-      @local = Local.new(path_to_deploy, ignorance)
-      @remote = Remote.new(host, ignorance)
+      local_options = options.select { |k, v| k == :redirect_rules }
+      @local = Local.new(path_to_deploy, ignorance, local_options)
+
+      remote_options = options.select { |k, v| k == :region }
+      @remote = Remote.new(host, ignorance, remote_options)
     end
 
     def deploy!
