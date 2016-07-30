@@ -147,7 +147,7 @@ environments:
   production:
     host: "example.com"
     region: "us-west-2"
-    distribution "CLOUDFRONT_DISTRIBUTION_ID"
+    distribution: "CLOUDFRONT_DISTRIBUTION_ID"
 ```
 
 Frizz would give us the following Rake tasks:
