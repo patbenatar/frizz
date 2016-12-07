@@ -9,12 +9,10 @@ module Frizz
         @distribution = Distribution.new(@options[:distribution])
       end
 
-      local_options = options.select { |k, v| k == :redirect_rules }
+      local_options = take_keys(options, [:redirect_rules])
       @local = Local.new(path_to_deploy, ignorance, local_options)
 
-      remote_options = options.select do |k, v|
-        k == :region || k == :prefer_gzip
-      end
+      remote_options = take_keys(options, [:region, :prefer_gzip])
       @remote = Remote.new(host, ignorance, remote_options)
     end
 
@@ -26,6 +24,12 @@ module Frizz
     private
 
     attr_reader :local, :remote, :options, :distribution, :ignorance
+
+    def take_keys(hash, keys_array)
+      hash.select do |k, v|
+        keys_array.include? k
+      end
+    end
 
     def path_to_deploy
       File.expand_path(options[:from])
