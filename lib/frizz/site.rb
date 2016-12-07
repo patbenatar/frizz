@@ -3,7 +3,7 @@ module Frizz
     def initialize(host, options={})
       @options = { from: "build" }.merge options
 
-      @ignorance = Ignorance.new(@options[:ignore])
+      @ignorance = Ignorance.new(@options[:ignore], @options[:prefer_gzip])
 
       if @options[:distribution]
         @distribution = Distribution.new(@options[:distribution])
