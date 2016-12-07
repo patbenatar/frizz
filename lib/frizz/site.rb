@@ -9,9 +9,7 @@ module Frizz
         @distribution = Distribution.new(@options[:distribution])
       end
 
-      local_options = options.select do |k, v|
-        k == :redirect_rules || k == :prefer_gzip
-      end
+      local_options = options.select { |k, v| k == :redirect_rules }
       @local = Local.new(path_to_deploy, ignorance, local_options)
 
       remote_options = options.select do |k, v|
