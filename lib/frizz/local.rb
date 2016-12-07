@@ -10,7 +10,7 @@ module Frizz
       @files ||= begin
         Dir.chdir(root_path) do
           Dir["**/*"].map do |local_path|
-            File.new(expand_path(local_path), local_path) unless ignore?(local_path) &&
+            File.new(expand_path(local_path), local_path) unless ignore?(local_path) ||
                                                                  ignore_for_gzip_version?(local_path)
           end.compact
         end
