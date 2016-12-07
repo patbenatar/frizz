@@ -92,7 +92,7 @@ If you want to serve gzipped files, you can specify that for each environment in
 environments:
   production:
     prefer_gzip:
-      - "true"
+      - true
 ```
 
 ### Ignore files in a deploy
