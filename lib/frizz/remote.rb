@@ -16,9 +16,7 @@ module Frizz
     def upload(file, key, options = {})
       encoding_option = {}
 
-      if options[:prefer_gzip]
-        return unless key.ends_with? '.gz'
-
+      if options[:prefer_gzip] && key.ends_with? '.gz'
         encoding_option[:content_encoding] = 'gzip'
 
         # remove the '.gz' extension for s3 deploys
