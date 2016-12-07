@@ -10,7 +10,8 @@ module Frizz
       @files ||= begin
         Dir.chdir(root_path) do
           Dir["**/*"].map do |local_path|
-            File.new(expand_path(local_path), local_path) unless ignore?(local_path)
+            File.new(expand_path(local_path), local_path) unless ignore?(local_path) &&
+                                                                 ignore_for_gzip_version?(local_path)
           end.compact
         end
       end.concat(redirect_files)
@@ -30,6 +31,15 @@ module Frizz
 
     def expand_path(local_path)
       ::File.join root_path, local_path
+    end
+
+    def ignore_for_gzip_version?(local_path)
+      return false unless @options[:prefer_gzip]
+
+      return false if local_path.ends_with? '.gz'
+
+      gzip_file_version_path = "#{expand_path(local_path)}.gz"
+      return true if ::File.file?(gzip_file_version_path)
     end
 
     def ignore?(path)
