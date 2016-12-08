@@ -1,7 +1,7 @@
 module Frizz
   class Site
     def initialize(host, options={})
-      @options = { from: "build" }.merge options
+      @options = { from: "build", :prefer_gzip: false }.merge options
 
       @ignorance = Ignorance.new(@options[:ignore], @options[:prefer_gzip])
 
