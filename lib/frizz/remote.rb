@@ -50,7 +50,9 @@ module Frizz
     attr_reader :bucket_name, :ignorance, :options
 
     def ignore?(object)
-      ignorance.ignore?(object.key, object.key)
+      # for remote files, you don't need to ignore for gzip preference,
+      # since there won't be any gzip files on s3
+      ignorance.ignore_matched_pattern?(object.key)
     end
 
     def objects

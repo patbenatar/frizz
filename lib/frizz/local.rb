@@ -33,7 +33,9 @@ module Frizz
     end
 
     def ignore?(path)
-      ::File.directory?(path) || ignorance.ignore?(path, expand_path(path))
+      ::File.directory?(path) ||
+      ignorance.ignore_matched_pattern?(path) ||
+      ignorance.ignore_for_gzip_version?(expand_path(path))
     end
 
     def is_redirect?(path)

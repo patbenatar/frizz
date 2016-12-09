@@ -13,7 +13,6 @@ module Frizz
       @local = Local.new(path_to_deploy, ignorance, local_options)
 
       remote_options = take_keys(options, [:region, :prefer_gzip])
-      # TODO: for remote ignorance, you don't need to ignore files for gzip, since there won't be any
       @remote = Remote.new(host, ignorance, remote_options)
     end
 

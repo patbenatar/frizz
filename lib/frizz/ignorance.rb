@@ -1,17 +1,11 @@
 module Frizz
   class Ignorance
-    attr_reader :patterns
+    attr_reader :patterns, :prefer_gzip
 
     def initialize(patterns, prefer_gzip)
       @patterns = patterns || []
       @prefer_gzip = prefer_gzip
     end
-
-    def ignore?(local_path, full_path)
-      ignore_matched_pattern?(local_path) || ignore_for_gzip_version?(full_path)
-    end
-
-    private
 
     def ignore_matched_pattern?(local_path)
       return false unless patterns.count
@@ -20,7 +14,7 @@ module Frizz
     end
 
     def ignore_for_gzip_version?(full_path)
-      return false unless @prefer_gzip
+      return false unless prefer_gzip
 
       return false if full_path.end_with? '.gz'
 
