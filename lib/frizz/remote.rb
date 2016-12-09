@@ -50,7 +50,7 @@ module Frizz
     attr_reader :bucket_name, :ignorance, :options
 
     def ignore?(object)
-      ignorance.ignore?(object.key)
+      ignorance.ignore?(object.key, object.key)
     end
 
     def objects
