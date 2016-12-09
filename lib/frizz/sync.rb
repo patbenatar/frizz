@@ -9,6 +9,8 @@ module Frizz
       changes = []
 
       # Sync existing files
+      # when comparing remote to local, make sure to strip the .gz extension
+      # from the local files, since none of the remote files will have the gz extension
       remote.files.each do |remote_file|
         local_path = remote_file.key
         local_file = local_index[local_path].sub(/(.gz)$/, '')
