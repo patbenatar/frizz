@@ -15,8 +15,6 @@ module Frizz
 
     def upload(file, key, options = {})
       encoding_option = {}
-      puts options[:prefer_gzip]
-      puts key
 
       if options[:prefer_gzip] && key.end_with?('.gz')
         encoding_option[:content_encoding] = 'gzip'
