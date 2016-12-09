@@ -9,10 +9,10 @@ module Frizz
         @distribution = Distribution.new(@options[:distribution])
       end
 
-      local_options = take_keys(options, [:redirect_rules])
+      local_options = take_keys(options, [:redirect_rules, :prefer_gzip])
       @local = Local.new(path_to_deploy, ignorance, local_options)
 
-      remote_options = take_keys(options, [:region, :prefer_gzip])
+      remote_options = take_keys(options, [:region])
       @remote = Remote.new(host, ignorance, remote_options)
     end
 
