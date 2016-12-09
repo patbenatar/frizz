@@ -20,7 +20,7 @@ module Frizz
     end
 
     def ignore_for_gzip_version?(full_path)
-      return false unless prefer_gzip
+      return false unless @prefer_gzip
 
       return false if full_path.ends_with? '.gz'
 
