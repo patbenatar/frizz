@@ -33,7 +33,7 @@ module Frizz
     end
 
     def ignore?(path)
-      ::File.directory?(path) || ignorance.ignore?(path)
+      ::File.directory?(path) || ignorance.ignore?(path, expand_path(local_path))
     end
 
     def is_redirect?(path)

@@ -7,24 +7,24 @@ module Frizz
       @prefer_gzip = prefer_gzip
     end
 
-    def ignore?(path)
-      ignore_matched_pattern?(path) || ignore_for_gzip_version?(path)
+    def ignore?(local_path, full_path)
+      ignore_matched_pattern?(local_path) || ignore_for_gzip_version?(full_path)
     end
 
     private
 
-    def ignore_matched_pattern?(path)
+    def ignore_matched_pattern?(local_path)
       return false unless patterns.count
 
-      patterns.any? { |p| ::File.fnmatch(p, path) }
+      patterns.any? { |p| ::File.fnmatch(p, local_path) }
     end
 
-    def ignore_for_gzip_version?(path)
+    def ignore_for_gzip_version?(full_path)
       return false unless prefer_gzip
 
-      return false if path.ends_with? '.gz'
+      return false if full_path.ends_with? '.gz'
 
-      gzip_file_version_path = "#{path}.gz"
+      gzip_file_version_path = "#{full_path}.gz"
       return true if ::File.file?(gzip_file_version_path)
     end
   end
