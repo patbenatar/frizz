@@ -91,8 +91,7 @@ If you want to serve gzipped files, you can specify that for each environment in
 ```yaml
 environments:
   production:
-    prefer_gzip:
-      - true
+    prefer_gzip: true
 ```
 
 ### Ignore files in a deploy
