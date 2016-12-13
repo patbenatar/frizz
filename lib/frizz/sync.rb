@@ -10,7 +10,7 @@ module Frizz
 
       # Sync existing files
       remote.files.each do |remote_file|
-        local_path = remote_file.key
+        local_path = remote.file_local_path(remote_file.key)
         local_file = local_index[local_path]
         local_file_md5 = local_file && local_file.checksum
 
