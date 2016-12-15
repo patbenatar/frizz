@@ -11,7 +11,7 @@ module Frizz
       ignore_matched_pattern?(local_path) || ignore_for_gzip_version?(local_path, base_path)
     end
 
-    privategem b
+    private
 
     def ignore_matched_pattern?(local_path)
       return false unless patterns.count
