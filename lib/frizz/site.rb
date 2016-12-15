@@ -3,17 +3,20 @@ module Frizz
     def initialize(host, options={})
       @options = { from: "build", prefer_gzip: false }.merge options
 
-      @ignorance = Ignorance.new(@options[:ignore], @options[:prefer_gzip])
+      @local_ignorance = Ignorance.new(@options[:ignore], @options[:prefer_gzip])
+      # for remote files, you don't need to ignore for gzip preference,
+      # since there won't be any gzip files on s3
+      @remote_ignorance = Ignorance.new(@options[:ignore], false)
 
       if @options[:distribution]
         @distribution = Distribution.new(@options[:distribution])
       end
 
       local_options = take_keys(options, [:redirect_rules, :prefer_gzip])
-      @local = Local.new(path_to_deploy, ignorance, local_options)
+      @local = Local.new(path_to_deploy, local_ignorance, local_options)
 
       remote_options = take_keys(options, [:region])
-      @remote = Remote.new(host, ignorance, remote_options)
+      @remote = Remote.new(host, remote_ignorance, remote_options)
     end
 
     def deploy!
@@ -23,7 +26,8 @@ module Frizz
 
     private
 
-    attr_reader :local, :remote, :options, :distribution, :ignorance
+    attr_reader :local, :remote, :options, :distribution, :local_ignorance,
+                :remote_ignorance
 
     def take_keys(hash, keys_array)
       hash.select do |k, v|

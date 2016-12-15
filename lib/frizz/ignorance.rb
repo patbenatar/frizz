@@ -7,14 +7,22 @@ module Frizz
       @prefer_gzip = prefer_gzip
     end
 
+    def ignore?(local_path, base_path = nil)
+      ignore_matched_pattern?(local_path) || ignore_for_gzip_version?(local_path, base_path)
+    end
+
+    privategem b
+
     def ignore_matched_pattern?(local_path)
       return false unless patterns.count
 
       patterns.any? { |p| ::File.fnmatch(p, local_path) }
     end
 
-    def ignore_for_gzip_version?(full_path)
-      return false unless prefer_gzip
+    def ignore_for_gzip_version?(local_path, base_path)
+      return false unless base_path && prefer_gzip
+
+      full_path = File.join(base_path, local_path)
 
       return false if full_path.end_with? '.gz'
 
