@@ -20,12 +20,11 @@ module Frizz
     end
 
     def ignore_for_gzip_version?(local_path, base_path)
-      return false unless base_path && prefer_gzip
+      return false unless base_path &&
+                          prefer_gzip &&
+                          !local_path.end_with `.gz`
 
       full_path = File.join(base_path, local_path)
-
-      return false if full_path.end_with? '.gz'
-
       gzip_file_version_path = "#{full_path}.gz"
       return true if ::File.file?(gzip_file_version_path)
     end
