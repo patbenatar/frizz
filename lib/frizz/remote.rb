@@ -43,7 +43,7 @@ module Frizz
     end
 
     def objects
-      client.list_objects(bucket: bucket_name).contents
+      paginate(client.list_objects(bucket: bucket_name), [])
     end
 
     def client
@@ -54,6 +54,11 @@ module Frizz
           Frizz.configuration.secret_access_key
         )
       )
+    end
+
+    def paginate(response, contents = [])
+      contents.push *response.contents
+      response.next_page? ? paginate(response.next_page, contents) : contents
     end
   end
 end
