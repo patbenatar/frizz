@@ -84,6 +84,16 @@ site = Frizz::Site.new("my-bucket", region: "us-west-2", distribution: "DISTRIBU
 site.deploy!
 ```
 
+### Prefer Gzipped files in a deploy
+
+If you want to serve gzipped files, you can specify that for each environment in `frizz.yml`:
+
+```yaml
+environments:
+  production:
+    prefer_gzip: true
+```
+
 ### Ignore files in a deploy
 
 If you want to ignore files or directories when syncing local with remote

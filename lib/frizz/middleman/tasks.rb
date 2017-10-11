@@ -40,7 +40,8 @@ module Frizz
                   distribution: env.distribution,
                   ignore: env.ignore,
                   redirect_rules: env.redirect_rules,
-                  region: env.region
+                  region: env.region,
+                  prefer_gzip: env.prefer_gzip
                 ).deploy!
               end
             end
