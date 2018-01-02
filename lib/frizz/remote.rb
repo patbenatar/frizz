@@ -14,11 +14,13 @@ module Frizz
     end
 
     def upload(file, key, options = {})
+      mime_type = MIME::Types.type_for(key).first
+
       object_options = {
         bucket: bucket_name,
         body: file,
         acl: 'public-read',
-        content_type: MIME::Types.type_for(key).first.content_type,
+        content_type: mime_type && mime_type.content_type || 'text/plain',
         key: key
       }
 
